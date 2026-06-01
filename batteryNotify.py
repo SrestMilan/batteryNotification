@@ -13,7 +13,6 @@ CHECK_INTERVAL = 60   # Check battery status every 60 seconds
 def get_battery_status():
     """
     Retrieves current battery information from the system.
-
     Returns:
         percent (int): Current battery percentage.
         power_plugged (bool): True if charger is connected, False otherwise.
@@ -25,7 +24,7 @@ def get_battery_status():
 # Function: Show Notification
 # ----------------------------
 
-def show_notification(title, message):
+def show_battery_notification(title, message):
     """
     Displays a desktop notification.
 
@@ -50,10 +49,8 @@ def main():
     while True:
         # Get current battery percentage and charging status
         percent, plugged = get_battery_status()
-
         # Display current battery status in terminal
         print(f"Battery: {percent}% | Charging: {plugged}")
-
         # ----------------------------------
         # LOW BATTERY CONDITION
         # ----------------------------------
@@ -61,11 +58,9 @@ def main():
         # Battery <= 20%
         # AND charger is not connected
         if percent <= LOW_BATTERY and not plugged:
-
             # Send notification only once
             if last_alert != "low":
-
-                show_notification(
+                show_battery_notification(
                     "Low Battery Warning ⚠️",
                     f"Battery is at {percent}%. Please charge your device."
                 )
@@ -81,7 +76,7 @@ def main():
             # Send notification only once
             if last_alert != "full":
 
-                show_notification(
+                show_battery_notification(
                     "Battery Full 🔋",
                     "Your battery is fully charged. You can unplug the charger."
                 )
